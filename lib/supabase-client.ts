@@ -1,26 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const isBrowser = typeof window !== 'undefined';
 
 if (!supabaseUrl) {
   throw new Error('NEXT_PUBLIC_SUPABASE_URL is not set');
 }
 
-if (!anonKey) {
+if (!supabaseAnonKey) {
   throw new Error('NEXT_PUBLIC_SUPABASE_ANON_KEY is not set');
 }
 
-export const supabaseBrowser = createClient(supabaseUrl, anonKey);
-
-export const supabaseServer = createClient(
-  supabaseUrl,
-  serviceKey ?? anonKey,
-  {
+export const createSupabaseClient = () =>
+  createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
-      autoRefreshToken: false,
-      persistSession: false,
+      autoRefreshToken: isBrowser,
+      persistSession: isBrowser,
     },
-  }
-);
+  });
+
+// Singletons for convenience in both environments.
+export const supabaseBrowser = createSupabaseClient();
+export const supabaseServer = supabaseBrowser;
