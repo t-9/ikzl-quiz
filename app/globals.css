@@ -1,34 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --bg: #0c1021;
-  --panel: #11162b;
-  --border: #1f2a4d;
-  --text: #e6e9f5;
-  --muted: #94a3b8;
-  --accent: #7c3aed;
-  --accent-strong: #a855f7;
-  --danger: #ef4444;
-  --success: #22c55e;
+  --background: 225 47% 6%;
+  --foreground: 213 31% 91%;
+  --card: 224 35% 12%;
+  --muted-foreground: 215 20% 65%;
+  --border-base: 223 30% 24%;
+  --accent-base: 270 83% 60%;
+  --accent-strong-base: 270 83% 70%;
+  --danger-base: 0 85% 60%;
+  --success-base: 142 71% 45%;
+  --radius: 0.75rem;
+  --font-sans: 'Inter', 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+
+  --bg: hsl(var(--background));
+  --panel: hsl(var(--card));
+  --border: hsl(var(--border-base));
+  --text: hsl(var(--foreground));
+  --muted: hsl(var(--muted-foreground));
+  --accent: hsl(var(--accent-base));
+  --accent-strong: hsl(var(--accent-strong-base));
+  --danger: hsl(var(--danger-base));
+  --success: hsl(var(--success-base));
 }
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+  * {
+    box-sizing: border-box;
+    border-color: hsl(var(--border-base));
+  }
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0 0 12px;
+    color: var(--muted);
+  }
+
+  small {
+    color: var(--muted);
+  }
 }
 
 .page-container {
   max-width: 960px;
   padding: 24px 16px 48px;
   margin: 0 auto;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 header {
@@ -47,16 +87,6 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-h1, h2, h3, h4 {
-  margin: 0;
-  font-weight: 700;
-}
-
-p {
-  margin: 0 0 12px;
-  color: var(--muted);
 }
 
 .card {
@@ -195,8 +225,4 @@ p {
 .choice-button.wrong {
   border-color: var(--danger);
   background: rgba(239, 68, 68, 0.12);
-}
-
-small {
-  color: var(--muted);
 }
