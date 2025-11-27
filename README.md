@@ -18,6 +18,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
 ```
 
+`SUPABASE_SERVICE_ROLE_KEY` は権限が強いため、シードスクリプトなどの開発用途で `.env.local` にのみ設定し、クライアントコードや本番環境には絶対に含めないでください。
+
 2. 依存関係をインストール
 
 ```bash
@@ -42,6 +44,16 @@ npm run dev
 - `lib/` — 型定義と Supabase クライアント
 - `components/` — UI・クイズ・ランキングのコンポーネント群
 - `questions.sample.json` — questions テーブルへのシード例
+
+## サンプルデータ投入
+
+`questions.sample.json` の内容を Supabase の `questions` テーブルに投入するには、サービスロールキーを使って以下を実行してください (開発環境限定)。
+
+```bash
+npm run seed:questions
+```
+
+スクリプトは既存の同一問題文を削除してから挿入します。
 
 ## Supabase テーブル
 
