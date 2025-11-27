@@ -6,6 +6,13 @@ interface Props {
 }
 
 export default function LeaderboardTable({ entries }: Props) {
+  const top10 = [...entries]
+    .sort((a, b) => {
+      if (a.score !== b.score) return b.score - a.score;
+      return a.time_taken_ms - b.time_taken_ms;
+    })
+    .slice(0, 10);
+
   return (
     <Table>
       <THead>
@@ -18,7 +25,7 @@ export default function LeaderboardTable({ entries }: Props) {
         </tr>
       </THead>
       <TBody>
-        {entries.map((entry, idx) => (
+        {top10.map((entry, idx) => (
           <tr key={`${entry.player_name}-${entry.created_at}`}>
             <TD>{idx + 1}</TD>
             <TD>{entry.player_name}</TD>

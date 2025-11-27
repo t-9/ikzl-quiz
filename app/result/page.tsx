@@ -20,13 +20,14 @@ export default function ResultPage() {
 
   const canSubmit = useMemo(() => playerName.trim().length > 0 && !saving, [playerName, saving]);
 
+  const fetchLeaderboard = async () => {
+    const res = await fetch('/api/leaderboard');
+    if (!res.ok) return;
+    const data: LeaderboardResponse = await res.json();
+    setLeaderboard(data.entries);
+  };
+
   useEffect(() => {
-    const fetchLeaderboard = async () => {
-      const res = await fetch('/api/leaderboard');
-      if (!res.ok) return;
-      const data: LeaderboardResponse = await res.json();
-      setLeaderboard(data.entries);
-    };
     fetchLeaderboard();
   }, []);
 
@@ -46,13 +47,12 @@ export default function ResultPage() {
     });
     if (!res.ok) {
       setError('スコアの保存に失敗しました');
+      setSaving(false);
+      return;
     }
+
+    await fetchLeaderboard();
     setSaving(false);
-    const refreshed = await fetch('/api/leaderboard');
-    if (refreshed.ok) {
-      const data: LeaderboardResponse = await refreshed.json();
-      setLeaderboard(data.entries);
-    }
   };
 
   return (
