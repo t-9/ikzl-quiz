@@ -11,18 +11,17 @@ export type QuestionsResponse = {
   questions: Question[];
 };
 
-export type SubmitScorePayload = {
-  player_name: string;
+export type QuizScore = {
   score: number;
   total_questions: number;
   time_taken_ms: number;
 };
 
-export type LeaderboardEntry = {
+export type SubmitScorePayload = QuizScore & {
   player_name: string;
-  score: number;
-  total_questions: number;
-  time_taken_ms: number;
+};
+
+export type LeaderboardEntry = SubmitScorePayload & {
   created_at: string;
 };
 
