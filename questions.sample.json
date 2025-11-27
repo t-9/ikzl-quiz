@@ -1,0 +1,9 @@
+[
+  {
+    "category": "general",
+    "difficulty": "easy",
+    "question": "日本の首都は？",
+    "choices": ["大阪", "東京", "京都", "名古屋"],
+    "correct_index": 1
+  }
+]
